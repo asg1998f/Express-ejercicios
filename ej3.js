@@ -60,7 +60,16 @@ app.put("/actualizarProduct/id/:id",(req,res)=>{
 app.delete("/deleteProduct/id/:id",(req,res)=>{
     res.send(products.filter(product=>product.id != req.params.id))
 })
+app.get("/productFilter",(req,res)=>{
+    res.send(data.items.filter((product)=>product.precio>=parseInt(req.query.precio)))
+})
 
+app.get("/productDefaultPriceFilter", (req, res) => {
+    res.send(data.items.filter((product) => product.precio >= 50 && product.precio <= 250));
+  });
+app.get("/product/id/:id", (req, res) => {
+    data.items[req.params.id - 1] ? res.send(data.items[req.params.id - 1]) : res.send({ message: "OK" });
+  });
 app.listen(8000, ()=>{
     console.log("Servidor levantado en el puerto" + PORT); 
 })
